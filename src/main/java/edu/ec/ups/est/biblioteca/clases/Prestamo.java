@@ -42,21 +42,5 @@ public class Prestamo {
 		this.fechaDevolucion = fechaDevolucion;
 	}
 	
-	public void calcularDiasPrestamo(Date fechaPrestamo, Date fechaDevolucion) {
-		
-	}
-	public void esPrestamoVigente(Date fechaPrestamo, Date fechaDevolucion) {
-		
-	}
-	
-	@Override
-	public String toString() {
-		return "Prestamo [libro=" + libro + ", fechaPrestamo=" + fechaPrestamo + ", fechaDevolucion=" + fechaDevolucion
-				+ "]";
-	}
-	
-	
-	
-	
 	
 }

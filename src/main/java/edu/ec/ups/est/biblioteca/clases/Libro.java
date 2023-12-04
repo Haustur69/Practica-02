@@ -25,7 +25,6 @@ public class Libro implements IPrestable {
 		this.autor = autor;
 		this.disponible = disponible;
 	}
-	
 
 	public Libro(String titulo, String autor) {
 		super();
@@ -57,24 +56,31 @@ public class Libro implements IPrestable {
 		this.año = año;
 	}
 
-	public boolean isDisponible() {
+	public boolean getDisponibilidad() {
 		return disponible;
 	}
-
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
+	public String disponible() {
+		if(this.disponible==true) {
+        	 return "disponible";
+        }else {
+        	return "no disponible";
+        }
+		
 	}
 
 	@Override
 	public void prestar() {
-		// TODO Auto-generated method stub
-		
+		this.disponible = false;
 	}
 
 	@Override
 	public void devolver() {
-		// TODO Auto-generated method stub
-		
+	this.disponible = true;
+	}
+	//Mostrar informacion
+	@Override
+	public String toString() {
+		return "Libro [titulo=" + titulo + ", autor=" + autor + ", año=" + año + ", disponible=" + disponible + "]";
 	}
 	
 	

@@ -29,20 +29,29 @@ public class Usuario extends Persona {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public void solicitarPrestamo(Libro libro, Date fechaPrestamo,Date fechaDevolucion) {
+	
+	public boolean verificarUsuario(Usuario usuario) {
+		if (getIdentificacion()==usuario.getIdentificacion()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void solicitarPrestamo(Libro libro, Date fechaPrestamo, Date fechaDevolucion) {
 		listaPrestamos.add(new Prestamo(libro, fechaPrestamo, fechaDevolucion));
+		libro.prestar();
 	}
 	
 	public void devolverLibro(Libro libro) {
-		
+		listaPrestamos.clear();
+		libro.devolver();
 	}
-	
-	
+
 	
 	@Override
 	public String mostrarInformacion() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "Nombre de usuario: "+ getNombre()+"\nCorreo electronico: "+getCorreo()+"\nPrestamos: "+listaPrestamos;
 	}
 	
 	

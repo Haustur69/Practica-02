@@ -1,4 +1,5 @@
 package edu.ec.ups.est.biblioteca.principal;
+import java.util.Date;
 import java.util.Scanner;
 import edu.ec.ups.est.biblioteca.clases.*;
 
@@ -64,27 +65,78 @@ public class Main {
                     String correoUser = scanner.nextLine();
                     Usuario nuevoUsuario = new Usuario(  correoUser,nombreUsuario,idUser);
                     biblioteca.agregarUsuario(nuevoUsuario);
+                    System.out.println(nuevoUsuario.mostrarInformacion());
+                    System.out.println("Su usuario se ha registrado con exito.\n");
 					 
 					 break;
 				 case 3:
-					 System.out.print("Ingrese el título del libro a buscar: ");
-	                    String tituloBusqueda = scanner.nextLine();
+					 do{
+	                    System.out.println("===== Opciones de Búsqueda =====");
+	                    System.out.println("1. Buscar por Título ");
+	                    System.out.println("2. Buscar por Titulo y Autor");
+	                    System.out.print("Ingrese su opción: ");
+	                    int opcionBusqu = scanner.nextInt();
+	                    scanner.nextLine();
+	                    switch (opcionBusqu) {
+	                        case 1:
+	                        	System.out.print("Ingrese el título del libro a buscar: ");
+	    	                    String tituloBusqueda = scanner.nextLine();
 
-	                    Libro libroEncontrado = biblioteca.buscarLibroPorTitulo(tituloBusqueda);
+	    	                    Libro libroEncontrado = biblioteca.buscarLibro(tituloBusqueda);
+	    	                    
+	    	                    if (libroEncontrado != null) {
+	    	                        
+	    							System.out.println("Libro encontrado: " + libroEncontrado.getTitulo() +
+	    	                                " de " + libroEncontrado.getAutor()+ " el libro esta: "+ libroEncontrado.disponible());
+	    	                    } else {
+	    	                        System.out.println("Libro no encontrado.\n");
+	    	                    }
+	                            break;
+	                        case 2:
+	                        	System.out.print("Ingrese el título del libro a buscar: ");
+	    	                    String tituloBusq = scanner.nextLine();
+	    	                    System.out.print("Ingrese el autor del libro a buscar: ");
+	    	                    String autorBusq = scanner.nextLine();
 
-	                    if (libroEncontrado != null) {
-	                        System.out.println("Libro encontrado: " + libroEncontrado.getTitulo() +
-	                                " de " + libroEncontrado.getAutor());
-	                    } else {
-	                        System.out.println("Libro no encontrado.");
-	                    }
-	 
+	    	                    Libro libroEnco = biblioteca.buscarLibro(tituloBusq, autorBusq);
+	    	                    
+	    	                    if (libroEnco != null) {
+	    	                        
+	    							System.out.println("Libro encontrado: " + libroEnco.getTitulo() +
+	    	                                " de " + libroEnco.getAutor()+ " el libro esta: "+ libroEnco.disponible());
+	    	                    } else {
+	    	                        System.out.println("Libro no encontrado.\n");
+	    	                    }
+	                            break;
+	                        	default:
+	                        		System.out.println("Opción no válida. Inténtelo de nuevo.\n");
+	                    		}
+	                    }while (opcion != 6);
+	       					 scanner.close();
+	                    
 					 break;
 				 case 4:
-					 // Implementación para prestar libro
+					 long milisegundosActuales = System.currentTimeMillis();
+					 Date fecha = new Date(milisegundosActuales);		
+					 System.out.print("\nIngrese el título del libro a prestar: ");
+	                    String libroPrestamo = scanner.nextLine();
+	                    System.out.print("Ingrese su identificacion: ");
+	                    String idUsuarioPrestamo = scanner.nextLine();
+	                    System.out.println("Ingrese los dias de prestamo");
+	                    int diasPrestamo = scanner.nextInt();
+	                    long milisegundosFuturos = milisegundosActuales + ((long) diasPrestamo * 24 * 60 * 60 * 1000);
+	                    Date fecha2 = new Date(milisegundosFuturos);
+	                    biblioteca.prestarLibro(biblioteca.buscarLibro(libroPrestamo), biblioteca.buscarUsuario(idUsuarioPrestamo), fecha,fecha2);
+	                    
+	                    
+	                    
 					 break;
 				 case 5:
-					 // Implementación para devolver libro
+					 System.out.print("\nIngrese el título del libro a devolver: ");
+	                    String libroDevuelto = scanner.nextLine();
+	                    System.out.print("Ingrese su identificacion: ");
+	                    String idUsuarioDevuelto = scanner.nextLine();
+	                    biblioteca.devolverLibro(biblioteca.buscarLibro(libroDevuelto), biblioteca.buscarUsuario(idUsuarioDevuelto));
 					 break;
 				 case 6:
 					 System.out.println("Saliendo del sistema...");
